@@ -14,7 +14,7 @@ class CustomAnnotation: MKPointAnnotation, Codable {
         super.init()
         self.coordinate = coordinate
         self.address = address
-        self.title = "📍 \(address ?? "Bilinmeyen Adres")"
+        self.title = "📍 \(address ?? "Unknown Address")"
     }
     
     // MARK: - Codable Implementation
@@ -31,7 +31,7 @@ class CustomAnnotation: MKPointAnnotation, Codable {
         let longitude = try container.decode(CLLocationDegrees.self, forKey: .longitude)
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.address = try container.decode(String?.self, forKey: .address)
-        self.title = "📍 \(self.address ?? "Bilinmeyen Adres")"
+        self.title = "📍 \(self.address ?? "Unknown Address")"
     }
     
     func encode(to encoder: Encoder) throws {
