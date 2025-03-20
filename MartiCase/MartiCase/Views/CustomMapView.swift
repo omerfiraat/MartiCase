@@ -19,7 +19,7 @@ extension Notification.Name {
 }
 
 // MARK: - CustomMapView
-class CustomMapView: UIView {
+final class CustomMapView: UIView {
     
     // MARK: - Properties
     private var mapView: MKMapView!
@@ -150,6 +150,7 @@ class CustomMapView: UIView {
     @objc private func clearMarkers() {
         mapView.removeAnnotations(mapView.annotations) // Tüm markerları temizle
         mapView.removeOverlays(mapView.overlays)       // Çizilmiş rotaları temizle
+        delegate?.didSelectLocation(address: "")
         directions?.cancel()                            // Devam eden yönlendirmeyi iptal et
     }
     
