@@ -157,6 +157,8 @@
 				DEVELOPMENT_TEAM = DTSAAQTA2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MartiCase/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "The app needs continuous access to your location, even in the background, to provide ongoing services.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app needs access to your location while you're using it to provide better services.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -185,6 +187,8 @@
 				DEVELOPMENT_TEAM = DTSAAQTA2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MartiCase/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "The app needs continuous access to your location, even in the background, to provide ongoing services.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app needs access to your location while you're using it to provide better services.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
