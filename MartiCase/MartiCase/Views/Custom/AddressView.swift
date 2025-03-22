@@ -13,7 +13,8 @@ final class AddressView: UIView {
     var address: String? {
         didSet {
             addressLabel.text = address
-            isHidden = (address == nil)
+            // Address boş ya da nil ise addressView'ı gizle
+            isHidden = address?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true
         }
     }
     

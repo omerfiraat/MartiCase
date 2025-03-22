@@ -19,7 +19,7 @@
 		00BB5DDD2D8C0FC300920304 /* Exceptions for "MartiCase" folder in "MartiCase" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				"Supporting Files/Info.plist",
 			);
 			target = 00BB5DCA2D8C0FC200920304 /* MartiCase */;
 		};
@@ -160,7 +160,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DTSAAQTA2J;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MartiCase/Info.plist;
+				INFOPLIST_FILE = "MartiCase/Supporting Files/Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "The app needs continuous access to your location, even in the background, to provide ongoing services.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app needs access to your location while you're using it to provide better services.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -190,7 +190,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DTSAAQTA2J;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MartiCase/Info.plist;
+				INFOPLIST_FILE = "MartiCase/Supporting Files/Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "The app needs continuous access to your location, even in the background, to provide ongoing services.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app needs access to your location while you're using it to provide better services.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
