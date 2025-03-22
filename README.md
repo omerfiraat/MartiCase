@@ -28,7 +28,7 @@ This iOS app tracks the user's location and adds markers on the map every time t
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/LocationTrackingApp.git
+   git clone https://github.com/omerfiraatx/MartiCase.git
    ```
 
 2. Open the project in Xcode.
