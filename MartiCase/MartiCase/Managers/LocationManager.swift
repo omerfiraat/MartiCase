@@ -13,6 +13,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     // Callback closure for location updates
     var didUpdateLocations: (([CLLocation]) -> Void)?
     var didFailWithError: ((Error) -> Void)?
+    var didChangeAuthorization: ((CLAuthorizationStatus) -> Void)?
 
     override init() {
         super.init()
@@ -40,4 +41,8 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         didFailWithError?(error)
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+          didChangeAuthorization?(status)
+      }
 }

@@ -9,10 +9,10 @@ import UIKit
 import CoreLocation
 import MapKit
 
-final class MapViewModel: NSObject, CLLocationManagerDelegate {
+final class MapViewModel: NSObject {
     
     // MARK: - Properties
-    private let locationManager = CLLocationManager()
+    private let locationManager = LocationManager()
     private var lastMarkerLocation: CLLocation?
     var userLocation: CLLocationCoordinate2D?
     var currentUserLocation: CLLocationCoordinate2D?
@@ -25,33 +25,36 @@ final class MapViewModel: NSObject, CLLocationManagerDelegate {
     // MARK: - Initialization
     override init() {
         super.init()
-        locationManager.delegate = self
-        setupLocationManager()
+        setupLocationManagerClosures()
         loadInitialLocationTrackingState()
     }
     
     // MARK: - Location Manager Setup
-    private func setupLocationManager() {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    private func setupLocationManagerClosures() {
+        locationManager.didUpdateLocations = { [weak self] locations in
+            self?.handleLocationUpdates(locations)
+        }
+        
+        locationManager.didFailWithError = { error in
+            print("Error: \(error.localizedDescription)")
+        }
+        
+        locationManager.didChangeAuthorization = { [weak self] status in
+            self?.handleAuthorizationChange(status)
+        }
     }
     
     // MARK: - Location Tracking
     func startTrackingUserLocation() {
-        DispatchQueue.global(qos: .background).async {
-            guard CLLocationManager.locationServicesEnabled() else { return }
-            
-            DispatchQueue.main.async {
-                self.locationManager.allowsBackgroundLocationUpdates = true
-                self.locationManager.startUpdatingLocation()
-            }
+        DispatchQueue.main.async {
+            self.locationManager.startUpdatingLocation()
         }
     }
     
     func stopTrackingUserLocation() {
-        locationManager.allowsBackgroundLocationUpdates = false
-        locationManager.stopUpdatingLocation()
+        DispatchQueue.main.async {
+            self.locationManager.stopUpdatingLocation()
+        }
     }
     
     func toggleLocationTracking(completion: (Bool) -> Void) {
@@ -68,7 +71,6 @@ final class MapViewModel: NSObject, CLLocationManagerDelegate {
     }
     
     private func updateLocationTrackingState(_ isActive: Bool) {
-        locationManager.allowsBackgroundLocationUpdates = isActive
         if isActive {
             startTrackingUserLocation()
         } else {
@@ -76,8 +78,20 @@ final class MapViewModel: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    // MARK: - CLLocationManagerDelegate
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    // MARK: - Authorization Handling
+    private func handleAuthorizationChange(_ status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            startTrackingUserLocation()
+        case .denied, .restricted:
+            stopTrackingUserLocation()
+        default:
+            break
+        }
+    }
+    
+    // MARK: - Location Updates Handling
+    private func handleLocationUpdates(_ locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
         
         if isFirstLocationUpdate {
@@ -92,21 +106,6 @@ final class MapViewModel: NSObject, CLLocationManagerDelegate {
         if shouldAddNewMarker(for: newLocation) {
             addMarker(at: newLocation.coordinate)
             lastMarkerLocation = newLocation
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error: \(error.localizedDescription)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedWhenInUse, .authorizedAlways:
-            startTrackingUserLocation()
-        case .denied, .restricted:
-            stopTrackingUserLocation()
-        default:
-            break
         }
     }
     
@@ -169,7 +168,6 @@ final class MapViewModel: NSObject, CLLocationManagerDelegate {
     // MARK: - Load Initial State
     private func loadInitialLocationTrackingState() {
         let isTrackingActive = UserDefaults.standard.bool(forKey: trackingKey)
-        locationManager.allowsBackgroundLocationUpdates = isTrackingActive
         if isTrackingActive {
             startTrackingUserLocation()
         }
